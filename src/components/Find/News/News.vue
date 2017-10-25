@@ -1,48 +1,110 @@
 <template>
   <div id="nba">
-    <ul>
-      <li v-for="(val,index) in newsVal.newsList" class="nba-list">
-        <a :href="val.url">
-          <ul class="nba-content">
-            <li :style="{background:'url('+val.pic+')',backgroundSize: 'cover'}">
-            </li>
-            <li>
-              <p v-text="val.content"></p>
-              <div>
-                <span v-text="val.author"></span>
-                <span v-text="val.time"></span>
-              </div>
-            </li>
-          </ul>
-        </a>
+    <ul v-infinite-scroll="loadMore"
+        infinite-scroll-disabled="loading"
+        infinite-scroll-distance="10">
+      <li v-for="(val,index) in newsListVal">
+        <ul>
+          <li v-for="(val,index) in val" class="nba-list">
+            <a :href="val.url">
+              <ul class="nba-content">
+                <li :style="{background:'url('+val.pic+')',backgroundSize: 'cover'}">
+                </li>
+                <li>
+                  <p v-text="val.content"></p>
+                  <div>
+                    <span v-text="val.author"></span>
+                    <span v-text="val.time"></span>
+                  </div>
+                </li>
+              </ul>
+            </a>
+          </li>
+        </ul>
       </li>
     </ul>
-    <div class="footer-content">
+
+    <div class="footer-content" v-if="newsFooterVal">
       <p>～～～～亲,到底了哦～～～～</p>
     </div>
+
+    <!--loading-->
+    <div class="loading" v-if="newsLoadingVal">
+      <span>加载中</span>
+      <mt-spinner :type="3" color="rgb(38, 162, 255)" :size="30"></mt-spinner>
+    </div>
+    <!--loading-->
   </div>
 </template>
 <script>
+  import Vue from 'vue'
+  import {InfiniteScroll} from 'mint-ui';
+  Vue.use(InfiniteScroll);
   export default{
     data(){
-      return {}
+      return {
+        newsListVal: [],
+        newsListValIndex: 0
+      }
     },
     computed: {
       newsVal(){
-        return this.$store.state.findNews.data.result
+        return this.$store.state.findNews.data.result.newsList
+      },
+      newsLoadingVal(){
+        return this.$store.state.newsLoadingVal
+      },
+      newsFooterVal(){
+        return this.$store.state.newsFooterVal
+      },
+      newsScrollVal(){
+        return this.$store.state.newsScrollVal
+      }
+    },
+    watch: {
+      newsListValIndex(){
+        if (this.newsListValIndex == this.newsVal.length - 1) {
+          this.$store.commit('newsFooterVal', true)
+        }
+      }
+    },
+    created(){
+      this.newsListVal.push(this.newsVal[0])
+    },
+    activated(){
+      window.scrollTo(0, this.newsScrollVal)
+    },
+    deactivated(){
+      let scrollVal = document.documentElement.scrollTop || document.body.scrollTop
+      this.$store.commit('newsScrollVal', scrollVal)
+    },
+    methods: {
+      loadMore(){
+        if (this.newsListValIndex < this.newsVal.length - 1) {
+          this.loading = true
+          this.$store.commit('newsLoadingVal', true)
+          setTimeout(() => {
+            this.newsListValIndex++
+            this.newsListVal.push(this.newsVal[this.newsListValIndex])
+            this.$store.commit('newsLoadingVal', false)
+            this.loading = false
+          }, 300)
+        }
       }
     }
 
   }
 </script>
 <style scoped>
-  #nba{
+  #nba {
     margin-top: 194px;
   }
-  .nba-list{
+
+  .nba-list {
     width: 96%;
     margin: 0 auto;
   }
+
   .nba-content {
     height: 220px;
     width: 100%;
@@ -73,7 +135,7 @@
     font-size: 40px;
     line-height: 50px;
     /*margin-bottom: -10px;*/
-    margin-top:20px;
+    margin-top: 20px;
   }
 
   .nba-content li:nth-child(2) span {
@@ -87,6 +149,7 @@
     border-radius: 30px;
     margin-bottom: 20px;
   }
+
   .footer-content {
     width: 100%;
     height: 60px;
@@ -94,10 +157,11 @@
     font-size: 28px;
     text-align: center;
     display: flex;
-    align-items:center;
+    align-items: center;
     justify-content: center;
   }
-  .footer-content p{
+
+  .footer-content p {
     background: #fff;
     width: 450px;
     line-height: 45px;
@@ -105,4 +169,22 @@
     color: #ff0000;
   }
 
+  .loading {
+    position: fixed;
+    width: 400px;
+    height: 100px;
+    bottom: 95px;
+    left: 50%;
+    margin-left: -200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+
+  .loading span {
+    font-size: 30px;
+    margin-right: 40px;
+    color: #000;
+  }
 </style>

@@ -13,10 +13,26 @@ const store = new vuex.Store({
     loadingVal:'',
     findNbaVal:{},
     dataListVal:{},
+    concernListVal:{},
     comVal:{},
     routerVal:'/find/nba',
     nbaPageScrollTop:'',
-    loading:false
+    homeLoadingVal:false,
+    nbaLoadingVal:false,
+    newsLoadingVal:false,
+    dataLoadingVal:false,
+    dataShowVal:false,
+    concernLoadingVal:false,
+    homeFooterVal:false,
+    nbaFooterVal:false,
+    newsFooterVal:false,
+    concernFooterVal:false,
+    homeScrollVal:0,
+    nbaScrollVal:0,
+    newsScrollVal:0,
+    dataScrollVal:0,
+    comScrollVal:0,
+    concernScrollVal:0
   },
   mutations: {
     haveDatas( state, val ){
@@ -49,10 +65,59 @@ const store = new vuex.Store({
     nbaPageScrollTop( state,val ){
       state.nbaPageScrollTop = val
     },
-    loading( state,val ){
-      state.loading = val
+    homeLoadingVal( state,val ){
+      state.homeLoadingVal = val
+    },
+    nbaLoadingVal( state,val ){
+      state.nbaLoadingVal = val
+    },
+    newsLoadingVal( state,val ){
+      state.newsLoadingVal = val
+    },
+    dataShowVal( state,val ){
+      state.dataShowVal = val
+    },
+    dataLoadingVal( state,val ){
+      state.dataLoadingVal = val
+    },
+    concernListVal( state,val ){
+      state.concernListVal = val
+    },
+    concernLoadingVal( state,val ){
+      state.concernLoadingVal = val
+    },
+    homeFooterVal( state,val ){
+      state.homeFooterVal = val
+    },
+    nbaFooterVal( state,val ){
+      state.nbaFooterVal = val
+    },
+    newsFooterVal( state,val ){
+      state.newsFooterVal = val
+    },
+    concernFooterVal( state,val ){
+      state.concernFooterVal = val
+    },
+    homeScrollVal( state,val ){
+      state.homeScrollVal = val
+    },
+    nbaScrollVal( state,val ){
+      state.nbaScrollVal = val
+    },
+    newsScrollVal( state,val ){
+      state.newsScrollVal = val
+    },
+    dataScrollVal( state,val ){
+      state.dataScrollVal = val
+    },
+    comScrollVal( state,val ){
+      state.comScrollVal = val
+    },
+    concernScrollVal( state,val ){
+      state.concernScrollVal = val
     }
   },
+
   actions: {
     getDatas(store, val){
       Vue.http({
@@ -100,6 +165,15 @@ const store = new vuex.Store({
           store.commit('comVal',response)
         })
         .catch(error => {
+          console.log(error);
+        })
+    },
+    concernListVal( store,val ){
+      axios.get('https://www.nbaNews/concern/news/005')
+        .then(response => {
+          store.commit('concernListVal',response)
+        })
+        .catch( error => {
           console.log(error);
         })
     }

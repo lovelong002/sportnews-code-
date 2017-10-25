@@ -20,73 +20,70 @@
 </template>
 <script>
   import Vue from 'vue'
-  import { Navbar, TabItem } from 'mint-ui';
+  import {Navbar, TabItem} from 'mint-ui';
 
-  Vue.component(Navbar.name, Navbar,TabItem.name, TabItem);
+  Vue.component(Navbar.name, Navbar, TabItem.name, TabItem);
   export default{
-      data(){
-          return{
-            nba:false,
-            news:false,
-            datas:false,
-            com:false,
-            selected:'1',
-            pageScrollTop: 0
-          }
-      },
-    watch:{
-          selected(){
-
-              if( this.selected == '1' ){
-                this.$router.push({path:'/find/nba'})
-                this.selected = '1'
-              }else if( this.selected == '2' ){
-                  this.$router.push({path:'/find/news'})
-
-              }else if( this.selected == '3' ){
-                this.$router.push({path:'/find/datas'})
-
-              }else if( this.selected == '4'){
-                  this.$router.push({path:'/find/com'})
-              }
-            this.$store.commit('routerVal',this.$route.fullPath)
-          },
-      pathName(){
-              if( this.pathName == 'Nba'){
-                  this.selected = '1'
-              }else if( this.pathName == 'News'){
-                this.selected = '2'
-              }else if( this.pathName == 'Datas'){
-                this.selected = '3'
-              }else if( this.pathName == 'Com'){
-                this.selected = '4'
-              }
+    data(){
+      return {
+        nba: false,
+        news: false,
+        datas: false,
+        com: false,
+        selected: '1',
+//            pageScrollTop: 0
       }
     },
-    deactivated(){     //表示keep-alive将被停用的时候会调用这个钩子函数
-      this.pageScrollTop = document.documentElement.scrollTop || document.body.scrollTop // 记录上下滚动位置
-//      this.navScrollLeft = document.querySelector('.nav-wrap').scrollLeft  //左边滚动
-      console.log(this.pageScrollTop);
+    watch: {
+      selected(){
+
+        if (this.selected == '1') {
+          this.$router.push({path: '/find/nba'})
+          this.selected = '1'
+        } else if (this.selected == '2') {
+          this.$router.push({path: '/find/news'})
+
+        } else if (this.selected == '3') {
+          this.$router.push({path: '/find/datas'})
+
+        } else if (this.selected == '4') {
+          this.$router.push({path: '/find/com'})
+        }
+        this.$store.commit('routerVal', this.$route.fullPath)
+      },
+      pathName(){
+        if (this.pathName == 'Nba') {
+          this.selected = '1'
+        } else if (this.pathName == 'News') {
+          this.selected = '2'
+        } else if (this.pathName == 'Datas') {
+          this.selected = '3'
+        } else if (this.pathName == 'Com') {
+          this.selected = '4'
+        }
+      }
     },
+    /*  deactivated(){     //表示keep-alive将被停用的时候会调用这个钩子函数
+     this.pageScrollTop = document.documentElement.scrollTop || document.body.scrollTop // 记录上下滚动位置
+     //      this.navScrollLeft = document.querySelector('.nav-wrap').scrollLeft  //左边滚动
+     },*/
     activated(){    //表示keep-alive被停用的时候会调用这个钩子函数
-      this.$router.push({path:this.$store.state.routerVal})
-//      if( this.$store.state.routerVal == ''){
-//          this.$router.push({path:'/find/nba'})
-//      }
-//      window.scrollTo(0, this.pageScrollTop)   //上下滚动赋值
-//      document.querySelector('.nav-wrap').scrollLeft = this.navScrollLeft //左右滚动赋值
+      this.$router.push({path: this.$store.state.routerVal})
+      /*      if( this.$store.state.routerVal == ''){
+       this.$router.push({path:'/find/nba'})
+       }
+       window.scrollTo(0, this.pageScrollTop)   //上下滚动赋值
+       document.querySelector('.nav-wrap').scrollLeft = this.navScrollLeft //左右滚动赋值*/
     },
-    computed:{
+    computed: {
       newsVal(){
-          return this.$store.state.findNews.data.result
+        return this.$store.state.findNews.data.result
       },
       pathName(){
-          return this.$route.name
+        return this.$route.name
       }
     },
-    methods:{
-
-    },
+    methods: {},
 
   }
 </script>
@@ -101,7 +98,7 @@
     top: 80px;
     left: 0;
     width: 100%;
-    height:95px;
+    height: 95px;
     align-items: center;
     border-bottom: 2px solid #ccc;
     background: white;
@@ -110,33 +107,33 @@
     /*box-sizing: border-box;*/
     /*background:green;*/
   }
-  .mint-navbar .mint-tab-item{
+
+  .mint-navbar .mint-tab-item {
 
     color: orangered;
-    line-height: 23px ;
+    line-height: 23px;
     margin-top: -35px;
     box-sizing: border-box;
     /*background: blue;*/
 
   }
 
- /* .mint-navbar .mint-tab-item.is-selected {
-    border-bottom: 9px solid #26a2ff;
-  }*/
+  /* .mint-navbar .mint-tab-item.is-selected {
+     border-bottom: 9px solid #26a2ff;
+   }*/
 
-
-
-  .mint-navbar .mint-tab-item.is-selected{
+  .mint-navbar .mint-tab-item.is-selected {
     border-bottom: 3px solid orangered;
-    border-top:none;
+    border-top: none;
   }
 
-.navbar-size{
-  font-size: 38px;
-}
-/*  .router-view{
-    padding: 0 15px;
-  }*/
+  .navbar-size {
+    font-size: 38px;
+  }
+
+  /*  .router-view{
+      padding: 0 15px;
+    }*/
 
 
 </style>

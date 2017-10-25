@@ -78,7 +78,7 @@
         turnVal: false,
         userVal: '',
         passWordVal: '',
-        aa:''
+        bb: ''
       }
     },
     methods: {
@@ -97,8 +97,8 @@
         }
       },
       toAbout(){
-          this.$router.push({path:'/about'})
-          this.$store.commit('goBackVal')
+        this.$router.push({path: '/about'})
+        this.$store.commit('goBackVal')
       }
     },
     watch: {
@@ -156,7 +156,7 @@
   }
 
   .qq-login {
-    background:url("../../assets/xinlang.jpg");
+    background: url("../../assets/xinlang.jpg");
     background-size: cover;
     left: 204px;
   }
@@ -271,38 +271,42 @@
     margin-left: -230px;
   }
 
-  .message, .buying,.jindong,.user,.set,.about{
-    width: 100%;
-    line-height: 80px;
-    font-size: 30px;
-    color: rgba(0,0,0,0.9);
+  .message, .buying, .jindong, .user, .set, .about {
+    width: 97%;
+    line-height: 120px;
+    margin: 0 auto;
+    font-size: 38px;
+    color: rgba(0, 0, 0, 0.9);
     position: relative;
     top: 0;
     left: 0;
   }
-  .message span:nth-child(1),.buying span:nth-child(1),.jindong span:nth-child(1),.user span:nth-child(1),.set span:nth-child(1),.about span:nth-child(1){
+
+  .message span:nth-child(1), .buying span:nth-child(1), .jindong span:nth-child(1), .user span:nth-child(1), .set span:nth-child(1), .about span:nth-child(1) {
     margin-left: 20px;
   }
-  .message span:nth-child(2),.buying span:nth-child(2),.jindong span:nth-child(2),.user span:nth-child(2),.set span:nth-child(2){
-    margin-left: 510px;
-    color: rgba(0,0,0,0.7);
+
+  .message span:nth-child(2), .buying span:nth-child(2), .jindong span:nth-child(2), .user span:nth-child(2), .set span:nth-child(2) {
+    margin-left: 490px;
+    color: rgba(0, 0, 0, 0.7);
   }
-  .about span:nth-child(2){
-    margin-left: 470px;
-    color: rgba(0,0,0,0.7);
+
+  .about span:nth-child(2) {
+    margin-left: 450px;
+    color: rgba(0, 0, 0, 0.7);
   }
-  .buying,.jindong,.set{
+
+  .buying, .jindong, .set {
     border-top: 2px dashed #ccc;
   }
-  .about, .user{
+
+  .about, .user {
     border-top: 8px solid #ccc;
   }
-  .about{
-    border-bottom: 2px dashed #ccc;
-  }
-  .buying span:nth-child(3) , .jindong span:nth-child(3){
-    font-size: 25px;
-    color: rgba(0,0,0,0.4);
+
+  .buying span:nth-child(3), .jindong span:nth-child(3) {
+    font-size: 30px;
+    color: rgba(0, 0, 0, 0.4);
     position: absolute;
     top: 0px;
     right: 120px;

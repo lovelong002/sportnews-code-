@@ -8,11 +8,11 @@
 
       </mt-header>
     </div>
-    <!--跳转到百度-->
-    <div class="soso">
-      <a href="https://m.baidu.com/?from=1012852s">搜一搜</a>
-    </div>
-    <!--跳转到百度-->
+    <!--  跳转到百度
+      <div class="soso">
+        <a href="https://m.baidu.com/?from=1012852s">搜一搜</a>
+      </div>
+      跳转到百度-->
 
     <!--header-->
 
@@ -38,9 +38,9 @@
         <img slot="icon" src="./assets/2.png">
         <span>发现</span>
       </mt-tab-item>
-      <mt-tab-item id="关心">
+      <mt-tab-item id="关注">
         <img slot="icon" src="./assets/3.jpg">
-        <span>关心</span>
+        <span>关注</span>
       </mt-tab-item>
       <mt-tab-item id="个人中心">
         <img slot="icon" src="./assets/0.png">
@@ -48,12 +48,6 @@
       </mt-tab-item>
     </mt-tabbar>
     <!--footer-->
-    <!--loading-->
-    <div class="loading" v-if="loadingVal">
-      <span>加载中</span>
-      <mt-spinner :type="3" color="rgb(38, 162, 255)" :size="30"></mt-spinner>
-    </div>
-    <!--loading-->
   </div>
 </template>
 
@@ -61,7 +55,7 @@
   import Vue from 'vue'
   import {Tabbar, TabItem, Spinner, Header} from 'mint-ui';
 
-  Vue.component(Spinner.name, Spinner,Tabbar.name, Tabbar,Header.name, Header,TabItem.name, TabItem);
+  Vue.component(Spinner.name, Spinner, Tabbar.name, Tabbar, Header.name, Header, TabItem.name, TabItem);
 
 
   export default {
@@ -83,6 +77,7 @@
       this.$store.dispatch('findNbaVal')
       this.$store.dispatch('dataListVal')
       this.$store.dispatch('comVal')
+      this.$store.dispatch('concernListVal')
 
     },
 
@@ -97,11 +92,9 @@
         return this.$route.name
       },
       routerValBack(){   // 获取当前路由的全路径
-          return this.$route.fullPath
+        return this.$route.fullPath
       },
-      loadingVal(){
-          return this.$store.state.loading
-      }
+
     },
 
     methods: {
@@ -111,15 +104,15 @@
       },
 
       routerVal(val){
-        if( val.indexOf('home') !== -1 ){   //用indexof判断拿到的路由地址是不是home,如果不是home就返回-1
-           this.selected = '首页'
-       }else if( val.indexOf('find') !== -1 ){
-         this.selected = '发现'
-       }else if( val.indexOf('concern') !== -1 ){
-         this.selected = '关心'
-       }else if( val.indexOf('mine') !== -1 ){
-         this.selected = '个人中心'
-       }
+        if (val.indexOf('home') !== -1) {   //用indexof判断拿到的路由地址是不是home,如果不是home就返回-1
+          this.selected = '首页'
+        } else if (val.indexOf('find') !== -1) {
+          this.selected = '发现'
+        } else if (val.indexOf('concern') !== -1) {
+          this.selected = '关注'
+        } else if (val.indexOf('mine') !== -1) {
+          this.selected = '个人中心'
+        }
       }
 
     },
@@ -130,7 +123,7 @@
           routerVal = '/home'
         } else if (this.selected == '发现') {
           routerVal = '/find'
-        } else if (this.selected == '关心') {
+        } else if (this.selected == '关注') {
           routerVal = '/concern'
         } else if (this.selected == '个人中心') {
           routerVal = '/mine'
@@ -140,8 +133,8 @@
       },
       routerValBack(){
         this.routerVal(this.$route.fullPath)
-        if( this.routerValBack === '/find'){  //如果当前的路由是/find,那么就加载到nba
-            this.$router.push({path: this.$store.state.routerVal})
+        if (this.routerValBack === '/find') {  //如果当前的路由是/find,那么就加载到nba
+          this.$router.push({path: this.$store.state.routerVal})
 
         }
       },
@@ -277,21 +270,5 @@
     margin-left: 20px;
   }
 
-  .loading {
-    position: fixed;
-    width: 400px;
-    height: 100px;
-    top: 1100px;
-    left: 50%;
-    margin-left: -200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 
-  .loading span {
-    font-size: 30px;
-    margin-right: 40px;
-    color: #000;
-  }
 </style>

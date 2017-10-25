@@ -70,7 +70,17 @@
     computed: {
       comVal(){
         return this.$store.state.comVal.data.result
+      },
+      comScrollVal(){
+        return this.$store.state.comScrollVal
       }
+    },
+    activated(){
+      window.scrollTo(0, this.comScrollVal)
+    },
+    deactivated(){
+      let scrollVal = document.documentElement.scrollTop || document.body.scrollTop
+      this.$store.commit('comScrollVal', scrollVal)
     }
   }
 </script>
@@ -183,12 +193,13 @@
 
   .content-hot .content-hot-title {
     height: 80px;
-    border-bottom: 2px dashed  #ccc;
+    border-bottom: 2px dashed #ccc;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  .content-hot .content-hot-title span{
+
+  .content-hot .content-hot-title span {
     font-size: 35px;
     line-height: 65px;
     width: 280px;
@@ -198,37 +209,43 @@
     border-radius: 30px;
     letter-spacing: 5px;
   }
-  .content-nba-content-main, .content-hot-text{
+
+  .content-nba-content-main, .content-hot-text {
     overflow: hidden;
   }
-   .content-hot-text li{
+
+  .content-hot-text li {
     float: left;
     width: 33%;
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     align-items: center;
   }
-   .content-hot-text li p{
+
+  .content-hot-text li p {
     font-size: 33px;
     padding: 20px 0px;
     color: #0a66ff;
-     margin-top: 18px;
+    margin-top: 18px;
 
   }
-   .content-hot-text li span{
+
+  .content-hot-text li span {
     font-size: 25px;
-    color: rgba(0,0,0,0.6);
+    color: rgba(0, 0, 0, 0.6);
   }
+
   .content-nba .content-nba-title {
     height: 90px;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 2px dashed #ccc;
     border-top: 2px solid #ccc;
     margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  .content-nba .content-nba-title span{
+
+  .content-nba .content-nba-title span {
     font-size: 35px;
     line-height: 65px;
     width: 280px;
@@ -238,59 +255,70 @@
     border-radius: 30px;
     letter-spacing: 5px;
   }
-  .content-nba-content{
+
+  .content-nba-content {
     width: 97%;
     margin: 0 auto;
   }
-  .content-nba-content .content-nba-common{
+
+  .content-nba-content .content-nba-common {
     line-height: 60px;
     border-bottom: 2px solid #ccc;
   }
-  .content-nba-content .content-nba-common span{
+
+  .content-nba-content .content-nba-common span {
     font-size: 30px;
     margin-left: 20px;
-    color: rgba(0,0,0,0.7);
+    color: rgba(0, 0, 0, 0.7);
   }
-  .content-nba-content-main{
+
+  .content-nba-content-main {
     overflow: hidden;
   }
-  .content-nba-content-main li{
+
+  .content-nba-content-main li {
     float: left;
     width: 33%;
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     align-items: center;
   }
-  .content-nba-content-main li p{
+
+  .content-nba-content-main li p {
     font-size: 33px;
     padding: 20px 0px;
     color: deeppink;
     margin-top: 18px;
   }
-  .content-nba-content-main li span{
+
+  .content-nba-content-main li span {
     font-size: 25px;
-    color: rgba(0,0,0,0.6);
+    color: rgba(0, 0, 0, 0.6);
   }
-  .content-nba-content-team{
+
+  .content-nba-content-team {
     overflow: hidden;
     margin-bottom: 30px;
   }
-  .content-nba-content-team li{
+
+  .content-nba-content-team li {
     float: left;
     width: 33%;
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     align-items: center;
   }
-  .content-nba-content-team li p{
+
+  .content-nba-content-team li p {
     font-size: 33px;
     padding: 20px 0px;
     color: #0ada18;
     margin-top: 18px;
   }
-  .content-nba-content-team li span{
+
+  .content-nba-content-team li span {
     font-size: 25px;
-    color: rgba(0,0,0,0.6);
+    color: rgba(0, 0, 0, 0.6);
   }
 
   .footer-content {
@@ -300,10 +328,11 @@
     font-size: 28px;
     text-align: center;
     display: flex;
-    align-items:center;
+    align-items: center;
     justify-content: center;
   }
-  .footer-content p{
+
+  .footer-content p {
     background: #fff;
     width: 450px;
     line-height: 45px;

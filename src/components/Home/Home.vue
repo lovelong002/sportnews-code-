@@ -25,7 +25,7 @@
     <div class="news">
       <ul class="news-ul" v-infinite-scroll="loadMore"
           infinite-scroll-disabled="loading"
-          infinite-scroll-distance="60">
+          infinite-scroll-distance="10">
         <li class="news-time" v-for="(val,index) in nbaData">
           <div class="news-time-box">
             <p class="news-time-text">
@@ -73,10 +73,15 @@
 
     </div>
     <!--newsList-->
-    <div class="footer-content">
+    <div class="footer-content" v-if="homeFooterVal">
       <p>～～～～亲,到底了哦～～～～</p>
     </div>
-
+    <!--loading-->
+    <div class="loading" v-if="homeLoadingVal">
+      <span>加载中</span>
+      <mt-spinner :type="3" color="rgb(38, 162, 255)" :size="30"></mt-spinner>
+    </div>
+    <!--loading-->
   </div>
 </template>
 
@@ -95,22 +100,22 @@
         bannerList: [
           {
             'link': 'http://sports1.sina.cn',
-            'img': 'static/nba.png',
+            'img': 'static/home/nba.png',
             'name': 'NAB'
           },
           {
             'link': 'http://sports.sina.cn/cba',
-            'img': 'static/cba.png',
+            'img': 'static/home/cba.png',
             'name': 'CBA'
           },
           {
             'link': 'http://sports.sina.cn/laliga/index.d.html',
-            'img': 'static/eastja.png',
+            'img': 'static/home/eastja.png',
             'name': '西甲'
           },
           {
             'link': 'http://sports.sina.cn/premierleague/index.d.html',
-            'img': 'static/englishsuper.png',
+            'img': 'static/home/englishsuper.png',
             'name': '英超'
           }
         ],
@@ -126,11 +131,33 @@
       nbaDataAll() {
         return this.$store.state.nbaData.list
       },
-
-
+      homeLoadingVal(){
+        return this.$store.state.homeLoadingVal
+      },
+      homeFooterVal(){
+        return this.$store.state.homeFooterVal
+      },
+      homeScrollVal(){
+        return this.$store.state.homeScrollVal
+      }
     },
+
     created () {
       this.nbaData.push(this.nbaDataAll[0])  //当实例一创建就将后台返回的第0个数据添加到nbaData中,被渲染
+    },
+    activated(){
+      window.scrollTo(0, this.homeScrollVal)
+    },
+    deactivated(){
+      let scrollVal = document.documentElement.scrollTop || document.body.scrollTop
+      this.$store.commit('homeScrollVal', scrollVal)
+    },
+    watch: {
+      nbaDataIndex(){
+        if (this.nbaDataIndex == this.nbaDataAll.length - 1) {
+          this.$store.commit('homeFooterVal', true)
+        }
+      }
     },
     methods: {
       loadMore() {
@@ -138,25 +165,22 @@
 
         if (this.nbaDataIndex < this.nbaDataAll.length - 1) { //判断
           this.loading = true; //表示继续加载,往下走
-          this.$store.commit('loading',true)
-        let that = this
-         /* setTimeout( () => {
-            this.nbaDataIndex++
-          this.nbaData.push(this.nbaDataAll[this.nbaDataIndex])  ////添加第n个数据
-          this.loading = false;  //停止往下走
-          this.$store.commit('loading',false)
-          }, 1000)*/
-         setTimeout(function () {
-           that.nbaDataIndex++
-           that.nbaData.push(that.nbaDataAll[that.nbaDataIndex])  ////添加第n个数据
-           that.loading = false;  //停止往下走
-           that.$store.commit('loading',false)
-         },1000)
-
-
+          this.$store.commit('homeLoadingVal', true)
+          let that = this
+          /* setTimeout( () => {
+           this.nbaDataIndex++
+           this.nbaData.push(this.nbaDataAll[this.nbaDataIndex])  ////添加第n个数据
+           this.loading = false;  //停止往下走
+           this.$store.commit('loading',false)
+           }, 1000)*/
+          setTimeout(function () {
+            that.nbaDataIndex++
+            that.nbaData.push(that.nbaDataAll[that.nbaDataIndex])  ////添加第n个数据
+            that.loading = false;  //停止往下走
+            that.$store.commit('homeLoadingVal', false)
+            that.loading = false;
+          }, 2000)
         }
-
-
 
       },
     }
@@ -383,5 +407,22 @@
     color: #ff0000;
   }
 
+  .loading {
+    position: fixed;
+    width: 400px;
+    height: 100px;
+    bottom: 95px;
+    left: 50%;
+    margin-left: -200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
 
+  .loading span {
+    font-size: 30px;
+    margin-right: 40px;
+    color: #000;
+  }
 </style>
