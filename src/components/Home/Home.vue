@@ -3,15 +3,18 @@
     <!--banner-->
 
     <div class="top-bar">
-      <div class="page-swipe">
+      <!--homeBanner1-->
+      <div class="page-swipe" >
         <mt-swipe :auto="3600" :show-indicators="false">
-          <mt-swipe-item v-for="(item,index) in bannerList" :key="index">
+          <mt-swipe-item v-for="(item,index) in bannerList1" :key="index">
             <a :href="item.link">
               <div class="banner" :style="{background:'url('+item.img+')'}"></div>
             </a>
           </mt-swipe-item>
         </mt-swipe>
       </div>
+      <!--homeBanner1-->
+
     </div>
 
     <!--banner-->
@@ -97,25 +100,25 @@
     name: 'HelloWorld',
     data() {
       return {
-        bannerList: [
+        bannerList1: [
           {
             'link': 'http://sports1.sina.cn',
-            'img': 'static/home/nba.png',
+            'img': 'static/home/nba.jpg',
             'name': 'NAB'
           },
           {
             'link': 'http://sports.sina.cn/cba',
-            'img': 'static/home/cba.png',
+            'img': 'static/home/cba.jpg',
             'name': 'CBA'
           },
           {
             'link': 'http://sports.sina.cn/laliga/index.d.html',
-            'img': 'static/home/eastja.png',
+            'img': 'static/home/eastja.jpg',
             'name': '西甲'
           },
           {
             'link': 'http://sports.sina.cn/premierleague/index.d.html',
-            'img': 'static/home/englishsuper.png',
+            'img': 'static/home/englishsuper.jpg',
             'name': '英超'
           }
         ],
@@ -124,7 +127,7 @@
         colorIndex: 0,
         loading: false,
         nbaData: [],
-        nbaDataIndex: 0
+        nbaDataIndex: 0,
       }
     },
     computed: {
@@ -189,17 +192,26 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+  #home {
+    padding-top:80px;
+  }
 
   .banner {
     height: 100%;
     background-size: cover !important;
   }
 
+
+  .homebanner {
+    position: absolute;
+    top: 80px;
+    left: 0;
+  }
+
+  /*banner1*/
   .page-swipe {
     height: 300px;
     width: 100%;
-    margin-top: 80px;
 
   }
 

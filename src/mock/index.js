@@ -984,7 +984,7 @@ Mock.mock('https://www.nbaNews/find/news/002', {
           "time": "7分钟前",
           "author": "Twitter",
           "content": "盖尔-加朵现场观看湖人对阵快船的比赛",
-          'pic': './static/find/news/news2.png',
+          'pic': './static/find/news/news2.jpg',
           'url': 'https://m.hupu.com/nba/news/2214845.html'
 
         },
@@ -1006,21 +1006,21 @@ Mock.mock('https://www.nbaNews/find/news/002', {
           "time": "13分钟前",
           "author": "Twitter",
           "content": "坎特：和亚当斯对位很怪，他知道我所有脚步",
-          'pic': './static/find/news/news5.png',
+          'pic': './static/find/news/news5.jpg',
           'url': 'https://m.hupu.com/nba/news/2214842.html'
         },
         {
           "time": "17分钟前",
           "author": "Twitter",
           "content": "伊巴卡：新赛季以一场胜利开始的感觉棒极了",
-          'pic': './static/find/news/news6.png',
+          'pic': './static/find/news/news6.jpg',
           'url': 'https://m.hupu.com/nba/news/2214841.html'
         },
         {
           "time": "18分钟前",
           "author": "Instagram",
           "content": "快船官方发布贝弗利的赛场照：防守一阵",
-          'pic': './static/find/news/news7.png',
+          'pic': './static/find/news/news7.jpg',
           'url': 'https://m.hupu.com/nba/news/2214840.html'
         },
         {
@@ -1048,7 +1048,7 @@ Mock.mock('https://www.nbaNews/find/news/002', {
           "time": "37分钟前",
           "author": "Basketball-Reference",
           "content": "高效！小乔丹半场抢下16个篮板",
-          'pic': './static/find/news/news11.png',
+          'pic': './static/find/news/news11.jpg',
           'url': 'https://m.hupu.com/nba/news/2214832.html'
         }
       ],
@@ -1057,14 +1057,14 @@ Mock.mock('https://www.nbaNews/find/news/002', {
           "time": "44分钟前",
           "author": "WOAI-TV",
           "content": "邦纳为前马刺队友量身选择最合适的三明治",
-          'pic': './static/find/news/news12.png',
+          'pic': './static/find/news/news12.jpg',
           'url': 'https://m.hupu.com/nba/news/2214831.html'
         },
         {
           "time": "47分钟前",
           "author": "Instagram",
           "content": "阿夫里内斯庆祝赛季开门红：精彩的团队表现！",
-          'pic': './static/find/news/news13.png',
+          'pic': './static/find/news/news13.jpg',
           'url': 'https://m.hupu.com/nba/news/2214828.html'
         },
         {
@@ -1078,21 +1078,21 @@ Mock.mock('https://www.nbaNews/find/news/002', {
           "time": "57分钟前",
           "author": "Sports Day",
           "content": "德罗赞和Nike达成了一份多年续约合同",
-          'pic': './static/find/news/news15.png',
+          'pic': './static/find/news/news15.jpg',
           'url': 'https://m.hupu.com/nba/news/2214825.html'
         },
         {
           "time": "1小时前",
           "author": "Twitter",
           "content": "比斯利：脚踝很疼，但没有结构性损伤",
-          'pic': './static/find/news/news16.png',
+          'pic': './static/find/news/news16.jpg',
           'url': 'https://m.hupu.com/nba/news/2214824.html'
         },
         {
           "time": "1小时前",
           "author": "Instagram",
           "content": "CJ-迈尔斯：因一直可以做自己所爱的事而心怀感激",
-          'pic': './static/find/news/news17.png',
+          'pic': './static/find/news/news17.jpg',
           'url': 'https://m.hupu.com/nba/news/2214823.html'
         },
         {
@@ -1106,14 +1106,14 @@ Mock.mock('https://www.nbaNews/find/news/002', {
           "time": "1小时前",
           "author": "沃斯堡明星电讯报",
           "content": "诺埃尔：这里的氛围感觉很特别",
-          'pic': './static/find/news/news19.png',
+          'pic': './static/find/news/news19.jpg',
           'url': 'https://m.hupu.com/nba/news/2214820.html'
         },
         {
           "time": "1小时前",
           "author": "Twitter",
           "content": "乔治：我们不在意数据，很享受合作的过程",
-          'pic': './static/find/news/news20.png',
+          'pic': './static/find/news/news20.jpg',
           'url': 'https://m.hupu.com/nba/news/2214818.html'
         },
         {
@@ -1124,7 +1124,7 @@ Mock.mock('https://www.nbaNews/find/news/002', {
           'url': 'https://m.hupu.com/nba/news/2214817.html'
         }
       ]
-    ]
+    ],
 
   },
 

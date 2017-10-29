@@ -1,4 +1,5 @@
-<!--<template>
+<!--
+<template>
   <div id="nba">
     &lt;!&ndash;banner&ndash;&gt;
 
@@ -44,30 +45,44 @@
     &lt;!&ndash;titleList&ndash;&gt;
 
     &lt;!&ndash;Content&ndash;&gt;
-    <ul class="list-content">
-      <li v-for="(val , index) in findNbaVal.contentList">
-        <a :href="val.url">
-          <ul class="list-content-ul">
-            <li class="list-content-li">
-              <div>
-                <p v-text="val.content"></p>
-              </div>
-              <span v-text="val.answer"></span>
-            </li>
-          </ul>
-        </a>
+    <ul v-infinite-scroll="loadMore"
+        infinite-scroll-disabled="loading"
+        infinite-scroll-distance="10">
+      <li v-for="(val,index) in nbaContentList">
+        <ul class="list-content">
+          <li v-for="(val , index) in val">
+            <a :href="val.url">
+              <ul class="list-content-ul">
+                <li class="list-content-li">
+                  <div>
+                    <p v-text="val.content"></p>
+                  </div>
+                  <span v-text="val.answer"></span>
+                </li>
+              </ul>
+            </a>
+          </li>
+        </ul>
       </li>
     </ul>
+
     &lt;!&ndash;Content&ndash;&gt;
-    <div class="footer-content">
+    <div class="footer-content" v-if="nbaFooterVal">
       <p>～～～～亲,到底了哦～～～～</p>
     </div>
+    &lt;!&ndash;loading&ndash;&gt;
+    <div class="loading" v-if="nbaLoadingVal">
+      <span>加载中</span>
+      <mt-spinner :type="3" color="rgb(38, 162, 255)" :size="30"></mt-spinner>
+    </div>
+    &lt;!&ndash;loading&ndash;&gt;
   </div>
 </template>
 <script>
   import Vue from 'vue'
-  import {Swipe, SwipeItem} from 'mint-ui';
+  import {Swipe, SwipeItem, InfiniteScroll} from 'mint-ui';
 
+  Vue.use(InfiniteScroll)
   Vue.component(Swipe.name, Swipe, SwipeItem.name, SwipeItem);
   export default{
     data(){
@@ -75,32 +90,73 @@
         bannerList: [
           {
             'link': 'https://m.hupu.com/bbs/20538683.html',
-            'img': 'static/find-nba-banner-01.png',
+            'img': 'static/find/nba/find-nba-banner-01.jpg',
             'name': '01'
           },
           {
             'link': 'https://m.hupu.com/bbs/20534756.html',
-            'img': 'static/find-nba-banner-02.png',
+            'img': 'static/find/nba/find-nba-banner-02.jpg',
             'name': '02'
           }
         ],
+        nbaContentList: [],
+        nbaContentListIndex: 0,
+
       }
     },
+
     computed: {
       findNbaVal(){
         return this.$store.state.findNbaVal.data.result
+      },
+      nbaLoadingVal(){
+        return this.$store.state.nbaLoadingVal
+      },
+      nbaFooterVal(){
+        return this.$store.state.nbaFooterVal
+      },
+      nbaScrollVal(){
+        return this.$store.state.nbaScrollVal
       }
     },
-    deactivated(){     //表示keep-alive将被停用的时候会调用这个钩子函数
-      let pageScrollTop = document.documentElement.scrollTop || document.body.scrollTop // 记录上下滚动位置
-//      this.navScrollLeft = document.querySelector('.nav-wrap').scrollLeft  //左边滚动
-        this.$store.commit('nbaPageScrollTop',pageScrollTop)
-    },
-    activated(){    //表示keep-alive被停用的时候会调用这个钩子函数
 
-      window.scrollTo(0, this.$store.state.nbaPageScrollTop)   //上下滚动赋值
+    created(){
+      this.nbaContentList.push(this.findNbaVal.contentList[0])
+
+    },
+    activated(){    //表示进入该组件的时候会调用这个钩子函数
+      window.scrollTo(0, this.nbaScrollVal)   //上下滚动赋值
 //      document.querySelector('.nav-wrap').scrollLeft = this.navScrollLeft //左右滚动赋值
     },
+    deactivated(){     //表示离开该组件时候会调用这个钩子函数
+      let scrollVal = document.documentElement.scrollTop || document.body.scrollTop // 记录上下滚动位置
+//      this.navScrollLeft = document.querySelector('.nav-wrap').scrollLeft  //左边滚动
+      this.$store.commit('nbaScrollVal', scrollVal)
+
+    },
+    watch: {
+      nbaContentListIndex(){
+        if (this.nbaContentListIndex == this.findNbaVal.contentList.length - 1) {
+          this.$store.commit('nbaFooterVal', true)
+        }
+      }
+    },
+    methods: {
+      loadMore(){
+
+        if (this.nbaContentListIndex < this.findNbaVal.contentList.length - 1) {
+          this.loading = true;
+          this.$store.commit('nbaLoadingVal', true)
+
+          setTimeout(() => {
+            this.nbaContentListIndex++
+            this.nbaContentList.push(this.findNbaVal.contentList[this.nbaContentListIndex])
+//              that.loading = false
+            this.$store.commit('nbaLoadingVal', false)
+          }, 2000)
+        }
+      }
+    }
   }
 </script>
 <style scoped>
@@ -157,7 +213,7 @@
     border-bottom: 2px solid #ccc;
   }
 
-  .title-list li div{
+  .title-list li div {
     flex: 1;
   }
 
@@ -211,26 +267,30 @@
   /*titleList*/
 
   /*listContent*/
-  .list-content li{
+  .list-content li {
     width: 96%;
     margin: -1px auto 0;
 
   }
-  .list-content li .list-content-ul li{
+
+  .list-content li .list-content-ul li {
     width: 100%;
-    padding:30px 0;
+    padding: 30px 0;
     border-top: 2px solid #ccc;
     color: #000;
   }
-  .list-content li .list-content-ul li div p{
+
+  .list-content li .list-content-ul li div p {
     font-size: 35px;
     line-height: 50px;
   }
-  .list-content li .list-content-ul li span{
+
+  .list-content li .list-content-ul li span {
     font-size: 33px;
-    color: rgba(0,0,0,0.5);
+    color: rgba(0, 0, 0, 0.5);
     margin-left: 500px;
   }
+
   /*listContent*/
   .footer-content {
     width: 100%;
@@ -239,15 +299,35 @@
     font-size: 28px;
     text-align: center;
     display: flex;
-    align-items:center;
+    align-items: center;
     justify-content: center;
   }
-  .footer-content p{
+
+  .footer-content p {
     background: #fff;
     width: 450px;
     line-height: 45px;
     border-radius: 40px;
     color: #ff0000;
+  }
+
+  .loading {
+    position: fixed;
+    width: 400px;
+    height: 100px;
+    bottom: 95px;
+    left: 50%;
+    margin-left: -200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+
+  .loading span {
+    font-size: 30px;
+    margin-right: 40px;
+    color: #000;
   }
 </style>-->
 
@@ -255,17 +335,23 @@
   <div id="nba">
     <!--banner-->
 
-    <div class="top-bar">
-      <div class="page-swipe">
-        <mt-swipe :auto="3600" :show-indicators="false">
-          <mt-swipe-item v-for="(item,index) in bannerList" :key="index">
-            <a :href="item.link">
-              <div class="banner" :style="{background:'url('+item.img+')'}"></div>
-            </a>
-          </mt-swipe-item>
-        </mt-swipe>
+      <div class="top-bar">
+        <!--homeBanner1-->
+        <div class="page-swipe nbabanner">
+          <mt-swipe :auto="3600" :show-indicators="false">
+            <mt-swipe-item v-for="(item,index) in bannerList" :key="index">
+              <a :href="item.link">
+                <div class="banner" :style="{background:'url('+item.img+')'}"></div>
+              </a>
+            </mt-swipe-item>
+          </mt-swipe>
+        </div>
+        <!--homeBanner1-->
+
+
       </div>
-    </div>
+
+
 
     <!--banner-->
     <!--titleList-->
@@ -342,18 +428,17 @@
         bannerList: [
           {
             'link': 'https://m.hupu.com/bbs/20538683.html',
-            'img': 'static/find/nba/find-nba-banner-01.png',
+            'img': 'static/find/nba/find-nba-banner-01.jpg',
             'name': '01'
           },
           {
             'link': 'https://m.hupu.com/bbs/20534756.html',
-            'img': 'static/find/nba/find-nba-banner-02.png',
+            'img': 'static/find/nba/find-nba-banner-02.jpg',
             'name': '02'
           }
         ],
         nbaContentList: [],
         nbaContentListIndex: 0,
-
       }
     },
 
@@ -413,8 +498,16 @@
 </script>
 <style scoped>
   #nba {
-    padding-top: 190px;
+    padding-top: 590px;
   }
+
+  .nbabanner{
+    position: absolute;
+    top: 190px;
+    left: 0;
+
+  }
+
 
   /*banner*/
   .banner {

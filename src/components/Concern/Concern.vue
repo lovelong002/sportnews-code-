@@ -1,10 +1,13 @@
 <template>
   <div id="concern">
+    <!--banner1-->
     <div>
       <a href="https://m.v.qq.com/play.html?&vid=g0368hz92n4&ptag=v.qq.com%23v.play.adaptor%232&mreferrer=https%3A%2F%2Fv.qq.com%2Fx%2Fpage%2Fg0368hz92n4.html&new=1">
         <div class="concern-banner" :style="{background:'url('+concernBannerPic+')',backgroundSize: 'cover'}"></div>
       </a>
     </div>
+    <!--banner1-->
+
 
     <div class="concern-header">
       <span>赛后</span>
@@ -119,12 +122,13 @@
   .concern-banner {
     width: 100%;
     height: 350px;
-    /*background: url("../../../static/concern/connomBanner.jpg");*/
-    margin-top: 80px;
-    /*background-size: cover;*/
+    position: absolute;
+    left: 0;
+    top: 80px;
   }
 
   .concern-header {
+    margin-top: 430px;
     line-height: 80px;
     width: 100%;
     border-bottom: 2px solid #ccc;

@@ -1,32 +1,41 @@
 <template>
   <div id="nba">
-    <ul v-infinite-scroll="loadMore"
-        infinite-scroll-disabled="loading"
-        infinite-scroll-distance="10">
-      <li v-for="(val,index) in newsListVal">
-        <ul>
-          <li v-for="(val,index) in val" class="nba-list">
-            <a :href="val.url">
-              <ul class="nba-content">
-                <li :style="{background:'url('+val.pic+')',backgroundSize: 'cover'}">
-                </li>
-                <li>
-                  <p v-text="val.content"></p>
-                  <div>
-                    <span v-text="val.author"></span>
-                    <span v-text="val.time"></span>
-                  </div>
-                </li>
-              </ul>
-            </a>
+    <!--newsBanner1-->
+    <div class="news-banner1">
+      <div class="news-banner">
+        <ul v-infinite-scroll="loadMore"
+            infinite-scroll-disabled="loading"
+            infinite-scroll-distance="10">
+          <li v-for="(val,index) in newsListVal1">
+            <ul>
+              <li v-for="(val,index) in val" class="nba-list">
+                <a :href="val.url">
+                  <ul class="nba-content">
+                    <li :style="{background:'url('+val.pic+')',backgroundSize: 'cover'}">
+                    </li>
+                    <li>
+                      <p v-text="val.content"></p>
+                      <div>
+                        <span v-text="val.author"></span>
+                        <span v-text="val.time"></span>
+                      </div>
+                    </li>
+                  </ul>
+                </a>
+              </li>
+            </ul>
           </li>
         </ul>
-      </li>
-    </ul>
+        <div class="footer-content-wrap">
+          <div class="footer-content" v-if="newsFooterVal">
+            <p>～～～～亲,到底了哦～～～～</p>
+          </div>
+        </div>
 
-    <div class="footer-content" v-if="newsFooterVal">
-      <p>～～～～亲,到底了哦～～～～</p>
+      </div>
     </div>
+    <!--newsBanner1-->
+
 
     <!--loading-->
     <div class="loading" v-if="newsLoadingVal">
@@ -34,6 +43,7 @@
       <mt-spinner :type="3" color="rgb(38, 162, 255)" :size="30"></mt-spinner>
     </div>
     <!--loading-->
+
   </div>
 </template>
 <script>
@@ -43,8 +53,9 @@
   export default{
     data(){
       return {
-        newsListVal: [],
-        newsListValIndex: 0
+        newsListVal1: [],
+        newsListValIndex: 0,
+        smallnewsListValIndex: 0,
       }
     },
     computed: {
@@ -69,7 +80,7 @@
       }
     },
     created(){
-      this.newsListVal.push(this.newsVal[0])
+      this.newsListVal1.push(this.newsVal[0])
     },
     activated(){
       window.scrollTo(0, this.newsScrollVal)
@@ -85,10 +96,10 @@
           this.$store.commit('newsLoadingVal', true)
           setTimeout(() => {
             this.newsListValIndex++
-            this.newsListVal.push(this.newsVal[this.newsListValIndex])
+            this.newsListVal1.push(this.newsVal[this.newsListValIndex])
             this.$store.commit('newsLoadingVal', false)
             this.loading = false
-          }, 300)
+          },2000)
         }
       }
     }
@@ -96,10 +107,13 @@
   }
 </script>
 <style scoped>
-  #nba {
-    margin-top: 194px;
-  }
 
+
+.news-banner{
+  position: absolute;
+  top: 194px;
+  left: 0;
+}
   .nba-list {
     width: 96%;
     margin: 0 auto;
@@ -149,7 +163,9 @@
     border-radius: 30px;
     margin-bottom: 20px;
   }
-
+.footer-content-wrap{
+  padding-bottom:115px;
+}
   .footer-content {
     width: 100%;
     height: 60px;

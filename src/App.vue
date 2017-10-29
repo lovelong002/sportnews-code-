@@ -29,7 +29,7 @@
 
 
     <!--footer-->
-    <mt-tabbar v-model="selected" fixed>
+    <mt-tabbar v-model="selected" fixed :style="{zIndex:999}">
       <mt-tab-item id="首页">
         <img slot="icon" src="./assets/1.png">
         <span>首页</span>
@@ -145,6 +145,7 @@
 </script>
 
 <style scoped>
+
   .header {
     z-index: 999;
   }
@@ -187,7 +188,7 @@
     right: 0;
     left: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 999;
   }
 
   .mint-header-button {
